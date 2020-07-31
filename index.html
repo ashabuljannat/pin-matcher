@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" type="text" id="pinValue" value="">
+                    <button class="generate-btn" id="pinBtn" onclick="showRandom()">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" type="text" id="numberValue" value="">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                                <div class="button" id="a7" onclick="addNumber(a7.innerText)">7</div>
+                                <div class="button" id="a8" onclick="addNumber(a8.innerText)">8</div>
+                                <div class="button" id="a9" onclick="addNumber(a9.innerText)">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" id="a4" onclick="addNumber(a4.innerText)">4</div>
+                                <div class="button" id="a5" onclick="addNumber(a5.innerText)">5</div>
+                                <div class="button" id="a6" onclick="addNumber(a6.innerText)">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" id="a1" onclick="addNumber(a1.innerText)">1</div>
+                                <div class="button" id="a2" onclick="addNumber(a2.innerText)">2</div>
+                                <div class="button" id="a3" onclick="addNumber(a3.innerText)">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" onclick="aClear()">
+                                    <</div>
+                                        <div class="button" id="a0" onclick="addNumber(a0.innerText)">0</div>
+                                        <div class="button" onclick="cancel()">C</div>
+                                </div>
+                                <div>
+                                    <button type="submit" class="submit-btn" id="submitBtn" onclick="submit()">Submit</button>
+                                    <p class="action-left" id="retry">3 try left</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="notify-section">
+                    <p class="notify" id="notMatch">❌ Pin Didn't Match, Please try more 2 times</p>
+                    <p class="notify" id="match">✅Pin Matched... Secret door is opening for you</p>
+                </div>
+            </div>
+
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script>
+                function showRandom() {
+                    document.getElementById("pinValue").value = Math.floor((Math.random() * 9999) + 999);
+
+                };
+
+                function addNumber(number) {
+                    document.getElementById("numberValue").value = document.getElementById("numberValue").value + number;
+                };
+
+                function submit() {
+                    var pin = document.getElementById("pinValue").value;
+                    var number = document.getElementById("numberValue").value;
+                    if (pin == number) {
+                        swal("Pin Matched...", "Secret door is opening for you", "success");
+                        document.getElementById('match').style.display = " inline";
+
+                        document.getElementById("pinValue").value = ' ';
+                        document.getElementById("numberValue").value = ' ';
+                    } else {
+                        swal("Pin Didn't Match", " Please try more 2 times", "error");
+                        document.getElementById('notMatch').style.display = " inline";
+
+                        document.getElementById('retry').innerText = '2 try left';
+                        // document.getElementById('retry').innerText = '1 try left';
+                    }
+                };
+
+                function cancel() {
+                    document.getElementById("numberValue").value = ' ';
+                };
+
+                function aClear() {
+                    var exp = document.getElementById("numberValue").value;
+                    document.getElementById("numberValue").value = exp.substring(0, exp.length - 1);
+                };
+            </script>
+</body>
+
+</html>
+
+</html>
